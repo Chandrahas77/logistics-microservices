@@ -38,6 +38,7 @@ func main() {
 	}
 	defer dbInstance.Close()
 
+	goose.SetDialect("postgres")
 	if err := goose.Up(dbInstance, "./migrations"); err != nil {
 		log.Fatalf("❌ Goose migration failed: %v", err)
 	}

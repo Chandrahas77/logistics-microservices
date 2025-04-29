@@ -67,6 +67,39 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_SSLMODE: disable
 
+  shipment-postgres:
+    image: postgres:15
+    container_name: shipment-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: shipmentuser
+      POSTGRES_PASSWORD: shipmentpass
+      POSTGRES_DB: shipmentdb
+    ports:
+      - "5434:5432"
+    volumes:
+      - shipment_postgres_data:/var/lib/postgresql/data
+
+  shipment-service:
+    build:
+      context: ./shipment-service
+      dockerfile: Dockerfile
+    container_name: shipment-service
+    restart: always
+    depends_on:
+      - shipment-postgres
+    ports:
+      - "50053:50053"
+    environment:
+      POSTGRES_USER: shipmentuser
+      POSTGRES_PASSWORD: shipmentpass
+      POSTGRES_DB: shipmentdb
+      POSTGRES_HOST: shipment-postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_SSLMODE: disable
+
 volumes:
   postgres_data:
   order_postgres_data:
+  shipment_postgres_data:
+
