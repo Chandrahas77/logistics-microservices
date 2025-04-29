@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package orderpb;
+
+option go_package = "github.com/Chandrahas77/logistics-microservices/order-service/orderpb";
+
+service OrderService {
+  rpc CreateOrder (CreateOrderRequest) returns (CreateOrderResponse);
+  rpc GetOrder (GetOrderRequest) returns (GetOrderResponse);
+}
+
+message CreateOrderRequest {
+  string order_id = 1;
+  string customer_name = 2;
+  string item_id = 3;
+  int32 quantity = 4;
+}
+
+message CreateOrderResponse {
+  string status = 1;
+}
+
+message GetOrderRequest {
+  string order_id = 1;
+}
+
+message GetOrderResponse {
+  string order_id = 1;
+  string customer_name = 2;
+  string item_id = 3;
+  int32 quantity = 4;
+}

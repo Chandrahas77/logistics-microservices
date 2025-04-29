@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # Database for warehouse-service
+  postgres:
+    image: postgres:15
+    container_name: warehouse-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: warehouseuser
+      POSTGRES_PASSWORD: warehousepass
+      POSTGRES_DB: warehousedb
+    ports:
+      - "6543:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Warehouse Service
+  warehouse-service:
+    build:
+      context: ./warehouse-service
+      dockerfile: Dockerfile
+    container_name: warehouse-service
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - "50051:50051"
+    environment:
+      POSTGRES_USER: warehouseuser
+      POSTGRES_PASSWORD: warehousepass
+      POSTGRES_DB: warehousedb
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_SSLMODE: disable
+
+  # Database for order-service
+  order-postgres:
+    image: postgres:15
+    container_name: order-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: orderuser
+      POSTGRES_PASSWORD: orderpass
+      POSTGRES_DB: orderdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - order_postgres_data:/var/lib/postgresql/data
+
+  # Order Service
+  order-service:
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    container_name: order-service
+    restart: always
+    depends_on:
+      - order-postgres
+    ports:
+      - "50052:50052"
+    environment:
+      POSTGRES_USER: orderuser
+      POSTGRES_PASSWORD: orderpass
+      POSTGRES_DB: orderdb
+      POSTGRES_HOST: order-postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_SSLMODE: disable
+
+volumes:
+  postgres_data:
+  order_postgres_data:
