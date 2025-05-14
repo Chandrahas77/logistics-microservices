@@ -5,7 +5,7 @@ const (
 	PostgresUser     = "shipmentuser"
 	PostgresPassword = "shipmentpass"
 	PostgresDB       = "shipmentdb"
-	PostgresHost     = "localhost"
-	PostgresPort     = "5434"
+	PostgresHost     = "shipment-postgres"
+	PostgresPort     = "5432"
 	PostgresSSLMode  = "disable"
 )

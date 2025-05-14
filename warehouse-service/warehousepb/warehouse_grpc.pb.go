@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	WarehouseService_AddInventory_FullMethodName = "/warehouse.WarehouseService/AddInventory"
-	WarehouseService_GetInventory_FullMethodName = "/warehouse.WarehouseService/GetInventory"
+	WarehouseService_AddInventory_FullMethodName  = "/warehouse.WarehouseService/AddInventory"
+	WarehouseService_GetInventory_FullMethodName  = "/warehouse.WarehouseService/GetInventory"
+	WarehouseService_ListInventory_FullMethodName = "/warehouse.WarehouseService/ListInventory"
 )
 
 // WarehouseServiceClient is the client API for WarehouseService service.
@@ -31,6 +32,7 @@ const (
 type WarehouseServiceClient interface {
 	AddInventory(ctx context.Context, in *AddInventoryRequest, opts ...grpc.CallOption) (*AddInventoryResponse, error)
 	GetInventory(ctx context.Context, in *GetInventoryRequest, opts ...grpc.CallOption) (*GetInventoryResponse, error)
+	ListInventory(ctx context.Context, in *ListInventoryRequest, opts ...grpc.CallOption) (*ListInventoryResponse, error)
 }
 
 type warehouseServiceClient struct {
@@ -61,6 +63,16 @@ func (c *warehouseServiceClient) GetInventory(ctx context.Context, in *GetInvent
 	return out, nil
 }
 
+func (c *warehouseServiceClient) ListInventory(ctx context.Context, in *ListInventoryRequest, opts ...grpc.CallOption) (*ListInventoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListInventoryResponse)
+	err := c.cc.Invoke(ctx, WarehouseService_ListInventory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WarehouseServiceServer is the server API for WarehouseService service.
 // All implementations must embed UnimplementedWarehouseServiceServer
 // for forward compatibility.
@@ -69,6 +81,7 @@ func (c *warehouseServiceClient) GetInventory(ctx context.Context, in *GetInvent
 type WarehouseServiceServer interface {
 	AddInventory(context.Context, *AddInventoryRequest) (*AddInventoryResponse, error)
 	GetInventory(context.Context, *GetInventoryRequest) (*GetInventoryResponse, error)
+	ListInventory(context.Context, *ListInventoryRequest) (*ListInventoryResponse, error)
 	mustEmbedUnimplementedWarehouseServiceServer()
 }
 
@@ -84,6 +97,9 @@ func (UnimplementedWarehouseServiceServer) AddInventory(context.Context, *AddInv
 }
 func (UnimplementedWarehouseServiceServer) GetInventory(context.Context, *GetInventoryRequest) (*GetInventoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInventory not implemented")
+}
+func (UnimplementedWarehouseServiceServer) ListInventory(context.Context, *ListInventoryRequest) (*ListInventoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListInventory not implemented")
 }
 func (UnimplementedWarehouseServiceServer) mustEmbedUnimplementedWarehouseServiceServer() {}
 func (UnimplementedWarehouseServiceServer) testEmbeddedByValue()                          {}
@@ -142,6 +158,24 @@ func _WarehouseService_GetInventory_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WarehouseService_ListInventory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListInventoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WarehouseServiceServer).ListInventory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WarehouseService_ListInventory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WarehouseServiceServer).ListInventory(ctx, req.(*ListInventoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WarehouseService_ServiceDesc is the grpc.ServiceDesc for WarehouseService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -156,6 +190,10 @@ var WarehouseService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetInventory",
 			Handler:    _WarehouseService_GetInventory_Handler,
+		},
+		{
+			MethodName: "ListInventory",
+			Handler:    _WarehouseService_ListInventory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

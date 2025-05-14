@@ -3,7 +3,7 @@ package db
 import (
     "database/sql"
     "log"
-    "warehouse-service/pkg/models"
+    "github.com/Chandrahas77/logistics-microservices/warehouse-service/pkg/models"
 
     _ "github.com/lib/pq"
 )

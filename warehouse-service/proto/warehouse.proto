@@ -4,6 +4,14 @@ package warehouse;
 
 option go_package = "warehouse-service/warehousepb";
 
+
+// Service
+service WarehouseService {
+  rpc AddInventory(AddInventoryRequest) returns (AddInventoryResponse);
+  rpc GetInventory(GetInventoryRequest) returns (GetInventoryResponse);
+  rpc ListInventory (ListInventoryRequest) returns (ListInventoryResponse);
+}
+
 // Messages
 message AddInventoryRequest {
   string item_id = 1;
@@ -24,8 +32,17 @@ message GetInventoryResponse {
   int32 quantity = 2;
 }
 
-// Service
-service WarehouseService {
-  rpc AddInventory(AddInventoryRequest) returns (AddInventoryResponse);
-  rpc GetInventory(GetInventoryRequest) returns (GetInventoryResponse);
+message ListInventoryRequest {}
+
+message InventoryItem {
+  string id = 1;
+  string name = 2;
+  int32 quantity = 3;
 }
+
+message ListInventoryResponse {
+  repeated InventoryItem inventory = 1;
+}
+
+
+

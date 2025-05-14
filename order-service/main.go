@@ -9,6 +9,8 @@ import (
 	"github.com/Chandrahas77/logistics-microservices/order-service/internal/service"
 	"github.com/Chandrahas77/logistics-microservices/order-service/orderpb"
 	"github.com/Chandrahas77/logistics-microservices/order-service/pkg/db"
+	_ "github.com/jackc/pgx/v5/stdlib"
+
 
 	"github.com/pressly/goose/v3"
 	"google.golang.org/grpc"
@@ -32,7 +34,7 @@ func main() {
 
 	log.Println("🚀 Running Goose migrations...")
 
-	dbInstance, err := goose.OpenDBWithDriver("postgres", connStr)
+	dbInstance, err := goose.OpenDBWithDriver("pgx", connStr)
 	if err != nil {
 		log.Fatalf("❌ Failed to open DB for migrations: %v", err)
 	}

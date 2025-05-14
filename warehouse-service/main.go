@@ -6,10 +6,10 @@ import (
 	"log"
 	"net"
 
-	"warehouse-service/constants"
-	"warehouse-service/internal/service"
-	"warehouse-service/pkg/db"
-	"warehouse-service/warehousepb"
+	"github.com/Chandrahas77/logistics-microservices/warehouse-service/constants"
+	"github.com/Chandrahas77/logistics-microservices/warehouse-service/internal/service"
+	"github.com/Chandrahas77/logistics-microservices/warehouse-service/pkg/db"
+	"github.com/Chandrahas77/logistics-microservices/warehouse-service/warehousepb"
 
 	"github.com/pressly/goose/v3"
 	"google.golang.org/grpc"

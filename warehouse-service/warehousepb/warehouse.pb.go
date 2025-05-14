@@ -222,6 +222,146 @@ func (x *GetInventoryResponse) GetQuantity() int32 {
 	return 0
 }
 
+type ListInventoryRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListInventoryRequest) Reset() {
+	*x = ListInventoryRequest{}
+	mi := &file_warehouse_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListInventoryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListInventoryRequest) ProtoMessage() {}
+
+func (x *ListInventoryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_warehouse_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListInventoryRequest.ProtoReflect.Descriptor instead.
+func (*ListInventoryRequest) Descriptor() ([]byte, []int) {
+	return file_warehouse_proto_rawDescGZIP(), []int{4}
+}
+
+type InventoryItem struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Quantity      int32                  `protobuf:"varint,3,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InventoryItem) Reset() {
+	*x = InventoryItem{}
+	mi := &file_warehouse_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InventoryItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InventoryItem) ProtoMessage() {}
+
+func (x *InventoryItem) ProtoReflect() protoreflect.Message {
+	mi := &file_warehouse_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InventoryItem.ProtoReflect.Descriptor instead.
+func (*InventoryItem) Descriptor() ([]byte, []int) {
+	return file_warehouse_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *InventoryItem) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *InventoryItem) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *InventoryItem) GetQuantity() int32 {
+	if x != nil {
+		return x.Quantity
+	}
+	return 0
+}
+
+type ListInventoryResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Inventory     []*InventoryItem       `protobuf:"bytes,1,rep,name=inventory,proto3" json:"inventory,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListInventoryResponse) Reset() {
+	*x = ListInventoryResponse{}
+	mi := &file_warehouse_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListInventoryResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListInventoryResponse) ProtoMessage() {}
+
+func (x *ListInventoryResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_warehouse_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListInventoryResponse.ProtoReflect.Descriptor instead.
+func (*ListInventoryResponse) Descriptor() ([]byte, []int) {
+	return file_warehouse_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ListInventoryResponse) GetInventory() []*InventoryItem {
+	if x != nil {
+		return x.Inventory
+	}
+	return nil
+}
+
 var File_warehouse_proto protoreflect.FileDescriptor
 
 const file_warehouse_proto_rawDesc = "" +
@@ -237,10 +377,18 @@ const file_warehouse_proto_rawDesc = "" +
 	"\aitem_id\x18\x01 \x01(\tR\x06itemId\"O\n" +
 	"\x14GetInventoryResponse\x12\x1b\n" +
 	"\titem_name\x18\x01 \x01(\tR\bitemName\x12\x1a\n" +
-	"\bquantity\x18\x02 \x01(\x05R\bquantity2\xb4\x01\n" +
+	"\bquantity\x18\x02 \x01(\x05R\bquantity\"\x16\n" +
+	"\x14ListInventoryRequest\"O\n" +
+	"\rInventoryItem\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
+	"\bquantity\x18\x03 \x01(\x05R\bquantity\"O\n" +
+	"\x15ListInventoryResponse\x126\n" +
+	"\tinventory\x18\x01 \x03(\v2\x18.warehouse.InventoryItemR\tinventory2\x88\x02\n" +
 	"\x10WarehouseService\x12O\n" +
 	"\fAddInventory\x12\x1e.warehouse.AddInventoryRequest\x1a\x1f.warehouse.AddInventoryResponse\x12O\n" +
-	"\fGetInventory\x12\x1e.warehouse.GetInventoryRequest\x1a\x1f.warehouse.GetInventoryResponseB\x1fZ\x1dwarehouse-service/warehousepbb\x06proto3"
+	"\fGetInventory\x12\x1e.warehouse.GetInventoryRequest\x1a\x1f.warehouse.GetInventoryResponse\x12R\n" +
+	"\rListInventory\x12\x1f.warehouse.ListInventoryRequest\x1a .warehouse.ListInventoryResponseB\x1fZ\x1dwarehouse-service/warehousepbb\x06proto3"
 
 var (
 	file_warehouse_proto_rawDescOnce sync.Once
@@ -254,23 +402,29 @@ func file_warehouse_proto_rawDescGZIP() []byte {
 	return file_warehouse_proto_rawDescData
 }
 
-var file_warehouse_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_warehouse_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_warehouse_proto_goTypes = []any{
-	(*AddInventoryRequest)(nil),  // 0: warehouse.AddInventoryRequest
-	(*AddInventoryResponse)(nil), // 1: warehouse.AddInventoryResponse
-	(*GetInventoryRequest)(nil),  // 2: warehouse.GetInventoryRequest
-	(*GetInventoryResponse)(nil), // 3: warehouse.GetInventoryResponse
+	(*AddInventoryRequest)(nil),   // 0: warehouse.AddInventoryRequest
+	(*AddInventoryResponse)(nil),  // 1: warehouse.AddInventoryResponse
+	(*GetInventoryRequest)(nil),   // 2: warehouse.GetInventoryRequest
+	(*GetInventoryResponse)(nil),  // 3: warehouse.GetInventoryResponse
+	(*ListInventoryRequest)(nil),  // 4: warehouse.ListInventoryRequest
+	(*InventoryItem)(nil),         // 5: warehouse.InventoryItem
+	(*ListInventoryResponse)(nil), // 6: warehouse.ListInventoryResponse
 }
 var file_warehouse_proto_depIdxs = []int32{
-	0, // 0: warehouse.WarehouseService.AddInventory:input_type -> warehouse.AddInventoryRequest
-	2, // 1: warehouse.WarehouseService.GetInventory:input_type -> warehouse.GetInventoryRequest
-	1, // 2: warehouse.WarehouseService.AddInventory:output_type -> warehouse.AddInventoryResponse
-	3, // 3: warehouse.WarehouseService.GetInventory:output_type -> warehouse.GetInventoryResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	5, // 0: warehouse.ListInventoryResponse.inventory:type_name -> warehouse.InventoryItem
+	0, // 1: warehouse.WarehouseService.AddInventory:input_type -> warehouse.AddInventoryRequest
+	2, // 2: warehouse.WarehouseService.GetInventory:input_type -> warehouse.GetInventoryRequest
+	4, // 3: warehouse.WarehouseService.ListInventory:input_type -> warehouse.ListInventoryRequest
+	1, // 4: warehouse.WarehouseService.AddInventory:output_type -> warehouse.AddInventoryResponse
+	3, // 5: warehouse.WarehouseService.GetInventory:output_type -> warehouse.GetInventoryResponse
+	6, // 6: warehouse.WarehouseService.ListInventory:output_type -> warehouse.ListInventoryResponse
+	4, // [4:7] is the sub-list for method output_type
+	1, // [1:4] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_warehouse_proto_init() }
@@ -284,7 +438,7 @@ func file_warehouse_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_warehouse_proto_rawDesc), len(file_warehouse_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

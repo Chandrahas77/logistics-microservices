@@ -1,4 +1,4 @@
-module warehouse-service
+module github.com/Chandrahas77/logistics-microservices/warehouse-service
 
 go 1.23.0
 

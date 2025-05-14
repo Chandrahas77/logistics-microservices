@@ -7,6 +7,8 @@ option go_package = "github.com/Chandrahas77/logistics-microservices/shipment-se
 service ShipmentService {
   rpc CreateShipment(CreateShipmentRequest) returns (CreateShipmentResponse);
   rpc GetShipment(GetShipmentRequest) returns (GetShipmentResponse);
+  rpc ListShipments (ListShipmentsRequest) returns (ListShipmentsResponse);
+
 }
 
 message CreateShipmentRequest {
@@ -27,4 +29,16 @@ message GetShipmentResponse {
   string shipment_id = 1;
   string order_id = 2;
   string status = 3;
+}
+
+message ListShipmentsRequest {}
+
+message Shipment {
+  string id = 1;
+  string order_id = 2;
+  string status = 3;
+}
+
+message ListShipmentsResponse {
+  repeated Shipment shipments = 1;
 }

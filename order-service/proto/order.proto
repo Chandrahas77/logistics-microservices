@@ -7,6 +7,7 @@ option go_package = "github.com/Chandrahas77/logistics-microservices/order-servi
 service OrderService {
   rpc CreateOrder (CreateOrderRequest) returns (CreateOrderResponse);
   rpc GetOrder (GetOrderRequest) returns (GetOrderResponse);
+  rpc ListOrders (ListOrdersRequest) returns (ListOrdersResponse);
 }
 
 message CreateOrderRequest {
@@ -29,4 +30,11 @@ message GetOrderResponse {
   string customer_name = 2;
   string item_id = 3;
   int32 quantity = 4;
+}
+
+message ListOrdersRequest {
+}
+
+message ListOrdersResponse {
+  repeated CreateOrderResponse orders = 1;
 }

@@ -229,6 +229,146 @@ func (x *GetShipmentResponse) GetStatus() string {
 	return ""
 }
 
+type ListShipmentsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListShipmentsRequest) Reset() {
+	*x = ListShipmentsRequest{}
+	mi := &file_shipment_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListShipmentsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListShipmentsRequest) ProtoMessage() {}
+
+func (x *ListShipmentsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_shipment_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListShipmentsRequest.ProtoReflect.Descriptor instead.
+func (*ListShipmentsRequest) Descriptor() ([]byte, []int) {
+	return file_shipment_proto_rawDescGZIP(), []int{4}
+}
+
+type Shipment struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	OrderId       string                 `protobuf:"bytes,2,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	Status        string                 `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Shipment) Reset() {
+	*x = Shipment{}
+	mi := &file_shipment_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Shipment) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Shipment) ProtoMessage() {}
+
+func (x *Shipment) ProtoReflect() protoreflect.Message {
+	mi := &file_shipment_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Shipment.ProtoReflect.Descriptor instead.
+func (*Shipment) Descriptor() ([]byte, []int) {
+	return file_shipment_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *Shipment) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Shipment) GetOrderId() string {
+	if x != nil {
+		return x.OrderId
+	}
+	return ""
+}
+
+func (x *Shipment) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+type ListShipmentsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Shipments     []*Shipment            `protobuf:"bytes,1,rep,name=shipments,proto3" json:"shipments,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListShipmentsResponse) Reset() {
+	*x = ListShipmentsResponse{}
+	mi := &file_shipment_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListShipmentsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListShipmentsResponse) ProtoMessage() {}
+
+func (x *ListShipmentsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_shipment_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListShipmentsResponse.ProtoReflect.Descriptor instead.
+func (*ListShipmentsResponse) Descriptor() ([]byte, []int) {
+	return file_shipment_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ListShipmentsResponse) GetShipments() []*Shipment {
+	if x != nil {
+		return x.Shipments
+	}
+	return nil
+}
+
 var File_shipment_proto protoreflect.FileDescriptor
 
 const file_shipment_proto_rawDesc = "" +
@@ -249,10 +389,18 @@ const file_shipment_proto_rawDesc = "" +
 	"\vshipment_id\x18\x01 \x01(\tR\n" +
 	"shipmentId\x12\x19\n" +
 	"\border_id\x18\x02 \x01(\tR\aorderId\x12\x16\n" +
-	"\x06status\x18\x03 \x01(\tR\x06status2\xba\x01\n" +
+	"\x06status\x18\x03 \x01(\tR\x06status\"\x16\n" +
+	"\x14ListShipmentsRequest\"M\n" +
+	"\bShipment\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x19\n" +
+	"\border_id\x18\x02 \x01(\tR\aorderId\x12\x16\n" +
+	"\x06status\x18\x03 \x01(\tR\x06status\"K\n" +
+	"\x15ListShipmentsResponse\x122\n" +
+	"\tshipments\x18\x01 \x03(\v2\x14.shipmentpb.ShipmentR\tshipments2\x90\x02\n" +
 	"\x0fShipmentService\x12W\n" +
 	"\x0eCreateShipment\x12!.shipmentpb.CreateShipmentRequest\x1a\".shipmentpb.CreateShipmentResponse\x12N\n" +
-	"\vGetShipment\x12\x1e.shipmentpb.GetShipmentRequest\x1a\x1f.shipmentpb.GetShipmentResponseBMZKgithub.com/Chandrahas77/logistics-microservices/shipment-service/shipmentpbb\x06proto3"
+	"\vGetShipment\x12\x1e.shipmentpb.GetShipmentRequest\x1a\x1f.shipmentpb.GetShipmentResponse\x12T\n" +
+	"\rListShipments\x12 .shipmentpb.ListShipmentsRequest\x1a!.shipmentpb.ListShipmentsResponseBMZKgithub.com/Chandrahas77/logistics-microservices/shipment-service/shipmentpbb\x06proto3"
 
 var (
 	file_shipment_proto_rawDescOnce sync.Once
@@ -266,23 +414,29 @@ func file_shipment_proto_rawDescGZIP() []byte {
 	return file_shipment_proto_rawDescData
 }
 
-var file_shipment_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_shipment_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_shipment_proto_goTypes = []any{
 	(*CreateShipmentRequest)(nil),  // 0: shipmentpb.CreateShipmentRequest
 	(*CreateShipmentResponse)(nil), // 1: shipmentpb.CreateShipmentResponse
 	(*GetShipmentRequest)(nil),     // 2: shipmentpb.GetShipmentRequest
 	(*GetShipmentResponse)(nil),    // 3: shipmentpb.GetShipmentResponse
+	(*ListShipmentsRequest)(nil),   // 4: shipmentpb.ListShipmentsRequest
+	(*Shipment)(nil),               // 5: shipmentpb.Shipment
+	(*ListShipmentsResponse)(nil),  // 6: shipmentpb.ListShipmentsResponse
 }
 var file_shipment_proto_depIdxs = []int32{
-	0, // 0: shipmentpb.ShipmentService.CreateShipment:input_type -> shipmentpb.CreateShipmentRequest
-	2, // 1: shipmentpb.ShipmentService.GetShipment:input_type -> shipmentpb.GetShipmentRequest
-	1, // 2: shipmentpb.ShipmentService.CreateShipment:output_type -> shipmentpb.CreateShipmentResponse
-	3, // 3: shipmentpb.ShipmentService.GetShipment:output_type -> shipmentpb.GetShipmentResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	5, // 0: shipmentpb.ListShipmentsResponse.shipments:type_name -> shipmentpb.Shipment
+	0, // 1: shipmentpb.ShipmentService.CreateShipment:input_type -> shipmentpb.CreateShipmentRequest
+	2, // 2: shipmentpb.ShipmentService.GetShipment:input_type -> shipmentpb.GetShipmentRequest
+	4, // 3: shipmentpb.ShipmentService.ListShipments:input_type -> shipmentpb.ListShipmentsRequest
+	1, // 4: shipmentpb.ShipmentService.CreateShipment:output_type -> shipmentpb.CreateShipmentResponse
+	3, // 5: shipmentpb.ShipmentService.GetShipment:output_type -> shipmentpb.GetShipmentResponse
+	6, // 6: shipmentpb.ShipmentService.ListShipments:output_type -> shipmentpb.ListShipmentsResponse
+	4, // [4:7] is the sub-list for method output_type
+	1, // [1:4] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_shipment_proto_init() }
@@ -296,7 +450,7 @@ func file_shipment_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_shipment_proto_rawDesc), len(file_shipment_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
