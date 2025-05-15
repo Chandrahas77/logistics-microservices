@@ -3,9 +3,13 @@ package service
 import (
 	"context"
 	"log"
+
 	"github.com/Chandrahas77/logistics-microservices/warehouse-service/pkg/db"
 	"github.com/Chandrahas77/logistics-microservices/warehouse-service/pkg/models"
 	"github.com/Chandrahas77/logistics-microservices/warehouse-service/warehousepb"
+	"github.com/google/uuid"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type WarehouseServer struct {
@@ -22,9 +26,14 @@ func NewWarehouseServer(inventory *db.PostgresInventory) *WarehouseServer {
 func (s *WarehouseServer) AddInventory(ctx context.Context, req *warehousepb.AddInventoryRequest) (*warehousepb.AddInventoryResponse, error) {
 	log.Printf("AddInventory called with: itemId=%s, itemName=%s, quantity=%d", req.GetItemId(), req.GetItemName(), req.GetQuantity())
 
-	// Build inventory model
+	itemId := ""
+
+	if req.ItemId == "" {
+		itemId = uuid.New().String()
+	}
+
 	inv := &models.Inventory{
-		ItemID:   req.GetItemId(),
+		ItemID:   itemId,
 		ItemName: req.GetItemName(),
 		Quantity: req.GetQuantity(),
 	}
@@ -60,4 +69,21 @@ func (s *WarehouseServer) GetInventory(ctx context.Context, req *warehousepb.Get
 		ItemName: inv.ItemName,
 		Quantity: inv.Quantity,
 	}, nil
+}
+
+func (s *WarehouseServer) ListInventory(ctx context.Context, req *warehousepb.ListInventoryRequest) (*warehousepb.ListInventoryResponse, error) {
+	records, err := s.inventory.GetAllInventory()
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to fetch inventory: %v", err)
+	}
+
+	var res warehousepb.ListInventoryResponse
+	for _, r := range records {
+		res.Inventory = append(res.Inventory, &warehousepb.InventoryItem{
+			Id:       r.ItemID,
+			Name:     r.ItemName,
+			Quantity: r.Quantity,
+		})
+	}
+	return &res, nil
 }
