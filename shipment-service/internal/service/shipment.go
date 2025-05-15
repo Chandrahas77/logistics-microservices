@@ -7,6 +7,7 @@ import (
 	"github.com/Chandrahas77/logistics-microservices/shipment-service/pkg/db"
 	"github.com/Chandrahas77/logistics-microservices/shipment-service/pkg/models"
 	"github.com/Chandrahas77/logistics-microservices/shipment-service/shipmentpb"
+	"github.com/google/uuid"
 )
 
 type ShipmentServer struct {
@@ -21,8 +22,13 @@ func NewShipmentServer(store *db.PostgresShipmentStore) *ShipmentServer {
 func (s *ShipmentServer) CreateShipment(ctx context.Context, req *shipmentpb.CreateShipmentRequest) (*shipmentpb.CreateShipmentResponse, error) {
 	log.Printf("Creating shipment: %v", req)
 
+	shipmentId := ""
+	if req.ShipmentId == "" {
+		shipmentId = uuid.New().String()
+	}
+
 	shipment := &models.Shipment{
-		ShipmentID: req.GetShipmentId(),
+		ShipmentID: shipmentId,
 		OrderID:    req.GetOrderId(),
 		Status:     req.GetStatus(),
 	}
@@ -50,4 +56,12 @@ func (s *ShipmentServer) GetShipment(ctx context.Context, req *shipmentpb.GetShi
 		Status:     shipment.Status,
 		ShipmentId: shipment.ShipmentID,
 	}, nil
+}
+
+func (s *ShipmentServer) ListShipments(ctx context.Context, req *shipmentpb.ListShipmentsRequest) (*shipmentpb.ListShipmentsResponse, error) {
+	shipments, err := s.store.GetAllShipments()
+	if err != nil {
+		return nil, err
+	}
+	return &shipmentpb.ListShipmentsResponse{Shipments: shipments}, nil
 }

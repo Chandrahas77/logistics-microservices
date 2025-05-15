@@ -35,6 +35,14 @@ message GetOrderResponse {
 message ListOrdersRequest {
 }
 
+message Order {
+  string id = 1;
+  string customer_name = 2;
+  string item = 3;
+  int32 quantity = 4;
+}
+
+
 message ListOrdersResponse {
-  repeated CreateOrderResponse orders = 1;
+  repeated Order orders = 1;
 }

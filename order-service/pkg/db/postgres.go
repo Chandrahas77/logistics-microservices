@@ -33,7 +33,6 @@ func (p *PostgresOrderStore) CreateOrder(order *models.Order) error {
 	return err
 }
 
-
 func (p *PostgresOrderStore) GetOrder(orderID string) (*models.Order, error) {
 	query := `
 		SELECT order_id, item_id, quantity, customer_name
@@ -50,3 +49,25 @@ func (p *PostgresOrderStore) GetOrder(orderID string) (*models.Order, error) {
 	return &order, nil
 }
 
+func (s *PostgresOrderStore) GetAllOrders() ([]*models.Order, error) {
+	rows, err := s.db.Query("SELECT order_id, customer_name, item_id, quantity FROM orders")
+	if err != nil {
+		return nil, fmt.Errorf("failed to query orders: %v", err)
+	}
+	defer rows.Close()
+
+	var orders []*models.Order
+	for rows.Next() {
+		var o models.Order
+		if err := rows.Scan(&o.OrderID, &o.CustomerName, &o.ItemID, &o.Quantity); err != nil {
+			return nil, fmt.Errorf("failed to scan order: %v", err)
+		}
+		orders = append(orders, &o)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("row iteration error: %v", err)
+	}
+
+	return orders, nil
+}

@@ -98,6 +98,21 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_SSLMODE: disable
 
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./api-gateway/Dockerfile
+    container_name: api-gateway
+    restart: always
+    depends_on:
+      - order-service
+      - warehouse-service
+      - shipment-service
+    ports:
+      - "8080:8080"  
+
+  
+
 volumes:
   postgres_data:
   order_postgres_data:

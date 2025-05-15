@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/Chandrahas77/logistics-microservices/shipment-service/pkg/models"
+	"github.com/Chandrahas77/logistics-microservices/shipment-service/shipmentpb"
 	_ "github.com/lib/pq"
 )
 
@@ -15,7 +16,6 @@ type PostgresShipmentStore struct {
 func (p *PostgresShipmentStore) DB() *sql.DB {
 	return p.db
 }
-
 
 func NewPostgresShipmentStore(connStr string) (*PostgresShipmentStore, error) {
 	db, err := sql.Open("postgres", connStr)
@@ -56,4 +56,22 @@ func (p *PostgresShipmentStore) GetShipment(shipmentID string) (*models.Shipment
 		return nil, err
 	}
 	return &shipment, nil
+}
+
+func (store *PostgresShipmentStore) GetAllShipments() ([]*shipmentpb.Shipment, error) {
+	rows, err := store.db.Query("SELECT shipment_id, order_id, status FROM shipments")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var shipments []*shipmentpb.Shipment
+	for rows.Next() {
+		var sh shipmentpb.Shipment
+		if err := rows.Scan(&sh.Id, &sh.OrderId, &sh.Status); err != nil {
+			return nil, err
+		}
+		shipments = append(shipments, &sh)
+	}
+	return shipments, nil
 }
